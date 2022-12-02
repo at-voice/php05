@@ -1,0 +1,75 @@
+body {
+	font-family: "Sawarabi Mincho", serif;
+	font-size: 20px;
+	background-image: url(../img/header.jpg);
+	background-repeat: no-repeat;
+	block-size: cover;
+	background-position: center;
+	margin: 0 auto;
+}
+
+.header {
+	position: fixed; /* ヘッダーを固定する */
+	top: 0; /* 上部から配置の基準位置を決める */
+	left: 0; /* 左から配置の基準位置を決める */
+	width: 100%; /* ヘッダーの横幅を指定する */
+	height: 15vh; /* ヘッダーの高さを指定する */
+	padding: 10px; /* ヘッダーの余白を指定する(上下左右) */
+	/* background-color: #31a9ee; ヘッダーの背景色を指定する */
+	color: black; /* フォントの色を指定する */
+	background-color: #666666;
+}
+
+.link {
+	margin: 10px auto;
+}
+
+.main {
+	margin-top: 20vh;
+	margin: 20vh 0;
+}
+
+a {
+	padding: 0.1em 0.3em;
+	position: relative;
+	display: inline-block;
+	transition: 0.3s;
+	color: #ab47bc;
+	text-decoration: none;
+}
+a::after {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	content: "";
+	width: 0;
+	height: 1px;
+	background-color: #ab47bc;
+	transition: 0.3s;
+}
+a:hover::after {
+	width: 100%;
+}
+
+input {
+	font-family: "Sawarabi Mincho", serif;
+}
+
+option {
+	font-family: "Sawarabi Mincho", serif;
+}
+
+.form_wrapper {
+	display: flex;
+	align-items: center;
+	gap: 30px;
+}
+
+table,
+td,
+th {
+	border: none;
+	border-bottom: 1px solid black;
+	margin: 10px auto;
+	text-align: center;
+}
