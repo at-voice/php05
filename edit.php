@@ -1,3 +1,36 @@
+<?php
+// 外のファイルを読み込むよ
+include('functions.php');
+
+// id受け取り
+
+$id = $_GET['id'];
+// id取得
+
+// $pdo = connect_to_db();
+
+
+
+// DB接続
+$pdo = connect_to_db();
+
+
+
+// SQL実行
+$sql = 'SELECT * FROM voicedemo WHERE id=:id';
+$stmt = $pdo->prepare($sql);
+$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+try {
+  $status = $stmt->execute();
+} catch (PDOException $e) {
+  echo json_encode(["sql error" => "{$e->getMessage()}"]);
+  exit();
+}
+
+$record = $stmt->fetch(PDO::FETCH_ASSOC);
+
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
  
@@ -21,6 +54,8 @@
 
 
   <div class="main">
+<h2>編集中</h2>
+
   <p><a href="read.php">他の人の感じ方を見てみる</a></p>
 
   <audio src="audio/audio.mp3" preload="auto" controls></audio>
@@ -30,7 +65,7 @@
     <div>
       <!-- <input type="text" name="gender" placeholder="性別"> -->
 
-      <select name="gender" id="gender">
+      <select name="gender" id="gender" value="<?= $record['gender'] ?>">
         <option value="man">男</option>
         <option value="woman">女</option>
         <option value="neither">どちらでもない</option>
@@ -39,7 +74,7 @@
 
     <div>
       <!-- <input type="text" name="age" placeholder="年齢"> -->
-<select name="age" id="age">
+<select name="age" id="age" value="<?= $record['age'] ?>">
   <script>
 var i;
 
@@ -55,7 +90,7 @@ document.write('<option value="'+i+'">'+i+'歳</option>');
 
   <div class="form_wrapper">
     <div>
-      <select name="preference" id="preference">
+      <select name="preference" id="preference" value="<?= $record['preference'] ?>">
         <option value="like" >すき</option>
         <option value="dislike">きらい</option>
         <option value="neither" selected>どちらでもない</option>
@@ -63,7 +98,12 @@ document.write('<option value="'+i+'">'+i+'歳</option>');
     </div>
 
     <div>
-      <input type="text" name="reason" placeholder="理由">
+      <input type="text" name="reason" placeholder="理由" value="<?= $record['reason'] ?>">
+    </div>
+
+    <div>
+      <input type="hidden" name="id" value="<?= $record['id'] ?>">
+      <!-- idは見せなくていいからtype="hidden" -->
     </div>
   </div>
 
@@ -74,13 +114,6 @@ document.write('<option value="'+i+'">'+i+'歳</option>');
 
 
 </form>
-
-<ul>
-  <li>編集のときに、変更した部分の色を変えたい（一覧表示のときは不要）</li>
-  <li>年齢プルダウンでデフォルト表示を18くらいにしたい</li>
-  <li>deleteクリック時にアラートを出したい</li>
-  <li>ぬるっとした感じに動いて欲しい</li>
-</ul>
 
 </div>
 </body>

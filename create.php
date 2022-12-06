@@ -18,24 +18,24 @@ $gender = $_POST['gender'];
 $age = $_POST['age'];
 $preference = $_POST['preference'];
 $reason = $_POST['reason'];
-// $when_hear = $_POST['when_hear'];
-// $where_hear = $_POST['where_hear'];
-// $whom_hear = $_POST['whom_hear'];
-// $comment = $_POST['comment'];
 
-// 各種項目設定
-$dbn ='mysql:dbname=voicedemo;charset=utf8mb4;port=3306;host=localhost';
-$user = 'root';
-$pwd = '';
+// // 各種項目設定
+// $dbn ='mysql:dbname=voicedemo;charset=utf8mb4;port=3306;host=localhost';
+// $user = 'root';
+// $pwd = '';
 
-// DB接続
-try {
-  $pdo = new PDO($dbn, $user, $pwd);
-  // exit('ok');
-} catch (PDOException $e) {
-  echo json_encode(["db error" => "{$e->getMessage()}"]);
-  exit();
-}
+// // DB接続
+// try {
+//   $pdo = new PDO($dbn, $user, $pwd);
+//   // exit('ok');
+// } catch (PDOException $e) {
+//   echo json_encode(["db error" => "{$e->getMessage()}"]);
+//   exit();
+// } 外部ファイル読み込み
+
+// 外のファイルを読み込むよ
+include('functions.php');
+$pdo = connect_to_db();
 
 // 「dbError:...」が表示されたらdb接続でエラーが発生していることがわかる．
 
@@ -51,10 +51,6 @@ $stmt->bindValue(':gender', $gender, PDO::PARAM_STR);
 $stmt->bindValue(':age', $age, PDO::PARAM_STR);
 $stmt->bindValue(':preference', $preference, PDO::PARAM_STR);
 $stmt->bindValue(':reason', $reason, PDO::PARAM_STR);
-// $stmt->bindValue(':when_hear', $when_hear, PDO::PARAM_STR);
-// $stmt->bindValue(':where_hear', $where_hear, PDO::PARAM_STR);
-// $stmt->bindValue(':whom_hear', $whom_hear, PDO::PARAM_STR);
-// $stmt->bindValue(':comment', $comment, PDO::PARAM_STR);
 
 // SQL実行（実行に失敗すると `sql error ...` が出力される）
 try {

@@ -1,15 +1,18 @@
 <?php
+// 外のファイルを読み込むよ
+include('functions.php');
+$pdo = connect_to_db();
 
-$dbn ='mysql:dbname=voicedemo;charset=utf8mb4;port=3306;host=localhost';
-$user = 'root';
-$pwd = '';
+// $dbn ='mysql:dbname=voicedemo;charset=utf8mb4;port=3306;host=localhost';
+// $user = 'root';
+// $pwd = '';
 
-try {
-  $pdo = new PDO($dbn, $user, $pwd);
-} catch (PDOException $e) {
-  echo json_encode(["db error" => "{$e->getMessage()}"]);
-  exit();
-}
+// try {
+//   $pdo = new PDO($dbn, $user, $pwd);
+// } catch (PDOException $e) {
+//   echo json_encode(["db error" => "{$e->getMessage()}"]);
+//   exit();
+// }
 
 // SQL作成&実行
 
@@ -34,9 +37,19 @@ foreach ($result as $record) {
       <td>{$record["age"]}</td>
       <td>{$record["preference"]}</td>
       <td>{$record["reason"]}</td>
+      <td>
+        <a href='edit.php?id={$record["id"]}'>edit</a>
+      </td>
+      <td>
+        <a href='delete.php?id={$record["id"]}'>delete</a>
+      </td>
+      
     </tr>
   ";
 }
+
+// deleteのところに 「onclick="MoveCheck();"」入れたかった。
+// 関数MoveCheckはJSで作ってるからJSの後にPHP入れたけどだめだった。
 
 
 ?>
@@ -89,5 +102,21 @@ foreach ($result as $record) {
 
 
   </div>
+
+<script>
+
+function MoveCheck() {
+    if( confirm("本当にコメントを削除しますか？") ) {
+        window.location.href = "delete.php?id={$record["id"]}";
+    }
+    else {
+        alert("コメント削除を中止しました");
+    }
+}
+  
+</script>
+
+
+
 </body>
 </html>
