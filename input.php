@@ -1,3 +1,9 @@
+<?php
+session_start();
+include('functions.php');
+check_session_id();
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
  
@@ -15,9 +21,12 @@
  </head>
  
 <body>
-<div class="header">
-  <h1>VOICEDEMO around the WORLD</h1>
-</div>
+		<div class="header">
+			<h1>VOICEDEMO around the WORLD</h1>
+      <p>
+<a href="read.php">感想一覧</a> / <a href="invitation.html">ユーザーの声</a>
+</p>
+		</div>
 
 
   <div class="main">
@@ -74,6 +83,10 @@ document.write('<option value="'+i+'">'+i+'歳</option>');
 
 
 </form>
+
+<div>
+      <a href="logout.php">logout</a>
+</div>
 
 <ul>
   <li>編集のときに、変更した部分の色を変えたい（一覧表示のときは不要）</li>

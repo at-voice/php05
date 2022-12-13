@@ -1,4 +1,6 @@
 <?php
+session_start();
+check_session_id();
 
 // var_dump($_POST);
 // exit(); POSTは受け取れている

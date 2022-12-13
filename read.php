@@ -1,6 +1,9 @@
 <?php
 // 外のファイルを読み込むよ
+session_start();
 include('functions.php');
+check_session_id();
+
 $pdo = connect_to_db();
 
 // $dbn ='mysql:dbname=voicedemo;charset=utf8mb4;port=3306;host=localhost';
@@ -18,6 +21,9 @@ $pdo = connect_to_db();
 
 $sql = 'SELECT * FROM voicedemo';
 $stmt = $pdo->prepare($sql);
+
+$user_id = $_SESSION['user_id'];
+
 
 try {
   $status = $stmt->execute();
@@ -37,19 +43,19 @@ foreach ($result as $record) {
       <td>{$record["age"]}</td>
       <td>{$record["preference"]}</td>
       <td>{$record["reason"]}</td>
+      <td><a href='like_create.php?user_id={$user_id}&todo_id={$record["id"]}'>わかる</a></td>
+  
       <td>
         <a href='edit.php?id={$record["id"]}'>edit</a>
       </td>
       <td>
-        <a href='delete.php?id={$record["id"]}'>delete</a>
+        <p onclick='MoveCheck()'>delete</p>
       </td>
       
     </tr>
   ";
 }
 
-// deleteのところに 「onclick="MoveCheck();"」入れたかった。
-// 関数MoveCheckはJSで作ってるからJSの後にPHP入れたけどだめだった。
 
 
 ?>
@@ -95,7 +101,9 @@ foreach ($result as $record) {
       <?=$output?>
       </tbody>
     </table>
-          <a href="input.php" class="link">入力画面</a>
+          <p><a href="input.php" class="link">入力画面</a></p>
+          <p><a href="logout.php">ログアウト</a>
+</p>
 
     </div>
 
@@ -107,12 +115,14 @@ foreach ($result as $record) {
 
 function MoveCheck() {
     if( confirm("本当にコメントを削除しますか？") ) {
-        window.location.href = "delete.php?id={$record["id"]}";
+        window.location.href = "delete.php?id=<?=$record["id"]?>";
     }
     else {
         alert("コメント削除を中止しました");
     }
 }
+  
+
   
 </script>
 
